@@ -10,10 +10,12 @@ const GET_DETAIL = gql`
     query getMovie($id: Int!){
         #아래의 query는 서버로 보내기 위한 것.
         movie(id:$id){
+            id
             title
             medium_cover_image
             language
             description_intro
+            isLiked @client
             
         }
     }
@@ -26,7 +28,7 @@ const Detail =()=>{
     console.log(loading, data)
     return(
         <>
-            {loading ? <Loading><p>Loading...</p></Loading>  : <Wrapper><ImageWrapper img = {data.movie.medium_cover_image}></ImageWrapper><TextWrapper><Title>{data.movie.title}</Title><Description>{data.movie.description_intro}</Description><Language>Language : {data.movie.language}</Language></TextWrapper></Wrapper>}
+            {loading ? <Loading><p>Loading...</p></Loading>  : <Wrapper><ImageWrapper img = {data.movie.medium_cover_image}></ImageWrapper><TextWrapper><Title>{data.movie.title}{data.movie.isLiked ? "♥️" : "😭"}</Title><Description>{data.movie.description_intro}</Description><Language>Language : {data.movie.language}</Language></TextWrapper></Wrapper>}
         </>
     )
 }
